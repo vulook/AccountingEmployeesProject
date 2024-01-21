@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap and jQuery -->
+    <link rel="stylesheet" type="text/css" th:href="@{'/css/main.css'}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{'/webjars/bootstrap/5.2.3/css/bootstrap.min.css'}"/>
+
+    <title>Employees</title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2 class="mt-4 mb-4">Employees</h2>
+
+    <div id="errorMessage" class="alert alert-danger" style="text-align: center; display:none;"></div>
+
+    <div id="successMessage" class="alert alert-success" style="text-align: center; display:none;"></div>
+
+    <div class="tab-content bg-light pt-3">
+
+        <div class="container-fluid ps-3">
+
+            <ul class="nav nav-tabs mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="allEmployee-tab" data-bs-toggle="pill" data-bs-target="#allEmployee"
+                       role="tab" aria-controls="allEmployee" aria-selected="true">All Employees</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="addEmployee-tab" data-bs-toggle="pill" data-bs-target="#addEmployee"
+                       role="tab" aria-controls="addEmployee" aria-selected="false">Add Employee</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="updateEmployee-tab" data-bs-toggle="pill" data-bs-target="#updateEmployee"
+                       role="tab" aria-controls="updateEmployee" aria-selected="false" hidden>Update Employee</a>
+                </li>
+            </ul>
+
+            <!-- Tab Panes -->
+            <div class="tab-content">
+                <!-- All Employees -->
+                <div class="tab-pane fade show active" id="allEmployee" role="tabpanel"
+                     aria-labelledby="allEmployee-tab">
+                    <div class="border-dark text-bg-light rounded-top">
+                        <h5 class="p-3 m-0">All Employees</h5>
+                    </div>
+                    <div class="border-1 bg-white p-4 rounded-bottom">
+                        <table class="table table-hover" id="tableEmployees">
+                            <thead class="table-dark">
+                            <tr class="border-top align-middle" style="height: 50px">
+                                <th scope="col" style="text-align: center">ID</th>
+                                <th scope="col" style="text-align: center">First Name</th>
+                                <th scope="col" style="text-align: center">Last Name</th>
+                                <th scope="col" style="text-align: center">Birth Date</th>
+                                <th scope="col" style="text-align: center">Email</th>
+                                <th scope="col" style="text-align: center">Phone Number</th>
+                                <th scope="col" style="text-align: center">Last Update</th>
+                                <th scope="col" style="text-align: center">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody id="employeeData" class="border-opacity-100" style="text-align: left">
+                            <!-- Employee data is inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Add Employee -->
+                <div class="tab-pane fade" id="addEmployee" role="tabpanel" aria-labelledby="addEmployee-tab">
+                    <div class="border-dark text-bg-light rounded-top">
+                        <h5 class="p-3 m-0">Add Employee</h5>
+                    </div>
+                    <div class="border-1 bg-white p-4 rounded-bottom">
+                        <form id="formAddEmployee">
+
+                            <div class="form-group mb-3">
+                                <label for="firstName" class="form-label">
+                                    <strong>First Name:</strong>
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="firstName"
+                                       name="addEmployee"
+                                       placeholder="Enter First Name of the Employee"
+                                >
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="lastName" class="form-label">
+                                    <strong>Last Name:</strong>
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="lastName"
+                                       name="addEmployee"
+                                       placeholder="Enter Last Name of the Employee"
+                                >
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="birthDate" class="form-label">
+                                    <strong>Birth Date:</strong>
+                                </label>
+                                <input type="date"
+                                       class="form-control"
+                                       id="birthDate"
+                                       name="addEmployee"
+                                       placeholder="Enter BirthDate of the Employee"
+                                >
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="email" class="form-label">
+                                    <strong>Email:</strong>
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="email"
+                                       name="addEmployee"
+                                       placeholder="Enter Email of the Employee"
+                                >
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="phoneNumber" class="form-label">
+                                    <strong>Phone Number:</strong>
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="phoneNumber"
+                                       name="addEmployee"
+                                       placeholder="Enter Phone Number of the Employee"
+                                >
+                            </div>
+
+                            <div>
+                                <button type="button" class="btn btn-warning btn-block" id="addNewEmployee">
+                                    Add New Employee
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Update Period -->
+                <div class="tab-pane fade" id="updateEmployee" role="tabpanel" aria-labelledby="updateEmployee-tab">
+                    <div class="border-dark text-bg-light rounded-top">
+                        <h5 class="p-3 m-0">Update Employee</h5>
+                    </div>
+                    <div class="border-1 bg-white p-4 rounded-bottom">
+                        <form id="formUpdateEmployee" style="display: none;">
+
+                            <div class="form-group mb-3">
+                                <label for="first_Name" class="form-label">
+                                    <strong>First Name:</strong>
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="first_Name"
+                                       name="updateEmployee"
+                                >
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="last_Name" class="form-label">
+                                    <strong>Last Name:</strong>
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="last_Name"
+                                       name="updateEmployee"
+                                >
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="birth_Date" class="form-label">
+                                    <strong>Birth Date:</strong>
+                                </label>
+                                <input type="date"
+                                       class="form-control"
+                                       id="birth_Date"
+                                       name="updateEmployee"
+                                >
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="email_" class="form-label">
+                                    <strong>Email:</strong>
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="email_"
+                                       name="updateEmployee"
+                                >
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="phone_Number" class="form-label">
+                                    <strong>Phone Number:</strong>
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="phone_Number"
+                                       name="updateEmployee"
+                                >
+                            </div>
+
+                            <div>
+                                <button type="button" class="btn btn-warning btn-block" id="updateEmployeeButton">
+                                    Update Employee
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+    // Fetches and displays Employees data in a table
+    async function displayEmployees() {
+        try {
+            const employeeData = document.getElementById('employeeData');
+            const response = await fetch('/employees/all');
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch employees');
+            }
+
+            const empData = await response.json();
+            employeeData.innerHTML = ''; // Clear the existing table content
+
+            empData.forEach(employee => {
+                const row = document.createElement('tr');
+                // Add data-id attribute for delete button
+                row.dataset.id = employee.id;
+                row.innerHTML = `
+                <td>${employee.id}</td>
+                <td>${employee.firstName}</td>
+                <td>${employee.lastName}</td>
+                <td>${employee.birthDate}</td>
+                <td>${employee.email}</td>
+                <td>${employee.phoneNumber}</td>
+                <td>${employee.updatedAt}</td>
+                <td>
+                    <button class="btn btn-warning update-btn" data-employee-id="${employee.id}" onclick="displayEmployeeDetails(${employee.id})">Update</button>
+                    <button class="btn btn-danger delete-btn" onclick="deleteEmployee(${employee.id})">Delete</bu
+                </td>
+            `;
+                employeeData.appendChild(row);
+            });
+
+        } catch (error) {
+            console.error('Error:', error);
+            const errorRow = document.createElement('tr');
+            errorRow.innerHTML = '<td colspan="7">Failed to fetch employees</td>';
+            document.getElementById('employeeData').appendChild(errorRow);
+        }
+    }
+
+    // Function to delete a employee
+    async function deleteEmployee(id) {
+        try {
+            const response = await fetch(`/employees/delete/${id}`, {
+                method: 'DELETE',
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to delete employee');
+            }
+
+            // Remove the deleted row from the table
+            const row = document.querySelector(`tr[data-id="${id}"]`);
+            row.remove();
+
+            // Refresh the data table
+            await displayEmployees();
+
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to delete employee');
+        }
+    }
+
+    // Function to add a new employee
+    async function addNewEmployee() {
+        try {
+            const firstNameInput = document.getElementById('firstName');
+            const lastNameInput = document.getElementById('lastName');
+            const birthDateInput = document.getElementById('birthDate');
+            const emailInput = document.getElementById('email');
+            const phoneNumberInput = document.getElementById('phoneNumber');
+
+            // Check if the first name input is not empty
+            if (!firstNameInput.value.trim()) {
+                throw new Error('Please enter the First Name of the employee.');
+            }
+
+            // Check if the first name input is not empty
+            if (!lastNameInput.value.trim()) {
+                throw new Error('Please enter the Last Name of the employee.');
+            }
+
+            // Check if the first name input is not empty
+            if (!birthDateInput.value.trim()) {
+                throw new Error('Please enter the Birth Date of the employee.');
+            }
+
+            // Check if the first name input is not empty
+            if (!emailInput.value.trim()) {
+                throw new Error('Please enter the Email of the employee.');
+            }
+
+            // Check if the first name input is not empty
+            if (!phoneNumberInput.value.trim()) {
+                throw new Error('Please enter the Phone Number of the employee.');
+            }
+
+            const response = await fetch('/employees/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    firstName: firstNameInput.value.trim(),
+                    lastName: lastNameInput.value.trim(),
+                    birthDate: birthDateInput.value.trim(),
+                    email: emailInput.value.trim(),
+                    phoneNumber: phoneNumberInput.value.trim()
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to add the employee.');
+            }
+
+            // Clear the input field
+            firstNameInput.value = '';
+            lastNameInput.value = '';
+            birthDateInput.value = '';
+            emailInput.value = '';
+            phoneNumberInput.value = '';
+
+            // Display a success message
+            const successMessage = document.getElementById('successMessage');
+            successMessage.innerHTML = 'Employee added successfully!';
+            successMessage.style.display = 'block';
+
+            // Hide the success message after 3 seconds
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 2000);
+
+            // Refresh the data table
+            await displayEmployees();
+        } catch (error) {
+            console.error('Error:', error);
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.innerHTML = error.message;
+            errorMessage.style.display = 'block';
+        }
+    }
+
+    // Add event listener to the "Add New Employee" button
+    const addNewEmployeeButton = document.getElementById('addNewEmployee');
+    addNewEmployeeButton.addEventListener('click', addNewEmployee);
+
+    async function displayEmployeeDetails(employeeId) {
+        const detailsEmployee = document.getElementById('formUpdateEmployee');
+        const errorMessage = document.getElementById('errorMessage');
+
+        try {
+            // Fetch employee details
+            const response = await fetch(`/employees/${employeeId}`);
+            const employee = await response.json();
+
+            if (response.ok) {
+                // Fill form fields with employee data
+                detailsEmployee.querySelector('#first_Name').value = employee.firstName;
+                detailsEmployee.querySelector('#last_Name').value = employee.lastName;
+
+                // Use Moment.js to format the date
+                const formattedBirthDate = moment(employee.birthDate, 'dd-MM-yyyy').format('YYYY-MM-DD');
+                detailsEmployee.querySelector('#birth_Date').value = formattedBirthDate;
+
+                detailsEmployee.querySelector('#email_').value = employee.email;
+                detailsEmployee.querySelector('#phone_Number').value = employee.phoneNumber;
+
+                // Show the form
+                detailsEmployee.style.display = 'block';
+                const updateEmployeeTab = document.querySelector('#updateEmployee-tab')
+                updateEmployeeTab.removeAttribute('hidden');
+                const tab = new bootstrap.Tab(updateEmployeeTab);
+                tab.show();
+
+                // Update the button click event (employeeId)
+                const updateEmployeeButton = document.getElementById('updateEmployeeButton');
+                updateEmployeeButton.onclick = () => updateEmployee(employeeId);
+
+            } else {
+                errorMessage.innerHTML = 'Employee not found';
+                errorMessage.style.display = 'block';
+            }
+
+        } catch (error) {
+            console.error('Error fetching employee details:', error);
+            errorMessage.innerHTML = error.message;
+            errorMessage.style.display = 'block';
+        }
+    }
+
+    // Function to update employee details
+    async function updateEmployee(employeeId) {
+        const detailsEmployee = document.getElementById('formUpdateEmployee');
+
+        try {
+            const firstNameInput = document.getElementById('first_Name');
+            const lastNameInput = document.getElementById('last_Name');
+            const birthDateInput = document.getElementById('birth_Date');
+            const emailInput = document.getElementById('email_');
+            const phoneNumberInput = document.getElementById('phone_Number');
+
+            // Print to the console
+            const selectedFirstName = firstNameInput.value;
+            const selectedLastName = lastNameInput.value;
+            const selectedBirthDate = birthDateInput.value;
+            const selectedEmail = emailInput.value;
+            const selectedPhoneNumber = phoneNumberInput.value;
+            console.log('____________Update Employee:____________');
+            console.log('Selected ID:', employeeId);
+            console.log('Selected Period:', selectedFirstName);
+            console.log('Selected Start Date:', selectedLastName);
+            console.log('Selected End Date:', selectedBirthDate);
+            console.log('Selected Department ID:', selectedEmail);
+            console.log('Selected Position ID:', selectedPhoneNumber);
+
+            // Send a request to update the employee
+            const employeeRequestBody = {
+                firstName: selectedFirstName,
+                lastName: selectedLastName,
+                birthDate: selectedBirthDate,
+                email: selectedEmail,
+                phoneNumber: selectedPhoneNumber,
+            };
+
+            // Send a request to update the employee
+            const response = await fetch(`/employees/update/${employeeId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(employeeRequestBody),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to update the employee.');
+            }
+
+            // Display a success message
+            const successMessage = document.getElementById('successMessage');
+            successMessage.innerHTML = 'Employee updated successfully!';
+            successMessage.style.display = 'block';
+
+
+            // Hide
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+                // Clear the form fields
+                detailsEmployee.reset();
+
+                // Hide
+                setTimeout(() => {
+                    detailsEmployee.style.display = 'none';
+
+                    // Switch to
+                    setTimeout(() => {
+                        const updateEmployeeTab = document.querySelector('#updateEmployee-tab')
+                        updateEmployeeTab.hidden = true;
+                        const allEmployeeTab = document.querySelector('#allEmployee-tab');
+                        const tab = new bootstrap.Tab(allEmployeeTab);
+                        tab.show();
+                    }, 10);
+                }, 10);
+            }, 2000);
+
+            // Refresh the employee details
+            await displayEmployees(employeeId);
+
+        } catch (error) {
+            console.error('Error updating the employee:', error);
+            // Display an error message on failure
+            const errorMessageDiv = document.getElementById('errorMessage');
+            errorMessageDiv.innerHTML = `<p>Error is updating the employee: ${error.message}</p>`;
+            errorMessageDiv.style.display = 'block';
+        }
+    }
+
+    // Call the function
+    document.addEventListener('DOMContentLoaded', () => {
+
+        displayEmployees();
+
+    });
+
+</script>
+
+<!-- Include JS library -->
+<script th:src="@{/webjars/jquery/3.6.4/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/2.11.7/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/momentjs/2.29.4/min/moment.min.js}"></script>
+
+</body>
+</html>
