@@ -39,6 +39,7 @@ class EmployeeServiceTests {
     @BeforeEach
     public void setup() {
         employee = Employee.builder()
+                .id(1L)
                 .firstName("TestService")
                 .lastName("TestService")
                 .birthDate(LocalDate.of(1991, 8, 10))
@@ -69,10 +70,11 @@ class EmployeeServiceTests {
     @DisplayName("=> JUnit test for get Employee by Id with MockitoExtension")
     void givenEmployeeId_whenFindByIdSavedEmployee() {
         // given
-        given(employeeRepository.findById(1L)).willReturn(Optional.of(employee));
+        long employeeId = 1L;
+        given(employeeRepository.findById(employeeId)).willReturn(Optional.of(employee));
 
         // when
-        Optional<Employee> foundEmployee = employeeService.findEmployeeById(1L);
+        Optional<Employee> foundEmployee = employeeService.findEmployeeById(employeeId);
 
         // then
         assertThat(foundEmployee).isEqualTo(Optional.of(employee));
@@ -121,15 +123,6 @@ class EmployeeServiceTests {
                 .phoneNumber("+38097321114")
                 .build();
 
-        Employee updatedEmployee = Employee.builder()
-                .id(1L)
-                .firstName(updatedEmployeeRequest.getFirstName())
-                .lastName(updatedEmployeeRequest.getLastName())
-                .birthDate(updatedEmployeeRequest.getBirthDate())
-                .email(updatedEmployeeRequest.getEmail())
-                .phoneNumber(updatedEmployeeRequest.getPhoneNumber())
-                .build();
-
         // when
         employeeService.updateEmployee(1L, updatedEmployeeRequest);
 
@@ -145,7 +138,6 @@ class EmployeeServiceTests {
 
         // Output the result to console
         System.out.println("Test givenEmployeeObject_whenUpdateEmployee() with MockitoExtension : Passed");
-        System.out.println("Updated Employee: " + updatedEmployee);
     }
 
     @Test
@@ -153,9 +145,7 @@ class EmployeeServiceTests {
     void givenEmployeeId_whenDeleteEmployee() {
         // given
         long employeeId = 1L;
-
-        // return an existing employee
-        given(employeeRepository.findById(employeeId)).willReturn(Optional.of(Employee.builder().build()));
+        given(employeeRepository.findById(employeeId)).willReturn(Optional.of(employee));
 
         willDoNothing().given(employeeRepository).deleteById(employeeId);
 
