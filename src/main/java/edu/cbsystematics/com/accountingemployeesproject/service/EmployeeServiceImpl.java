@@ -33,7 +33,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         // Log the successful save
         String fullName = savedEmployee.getFirstName() + " " + savedEmployee.getLastName();
-        logger.info("Employee: {} was created with ID: {}", fullName, savedEmployee.getId());
+        Long employeeId = savedEmployee.getId();
+        logger.info("Employee: {} was created with ID: {}", fullName, employeeId);
 
         return savedEmployee;
     }

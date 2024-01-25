@@ -3,6 +3,7 @@ package edu.cbsystematics.com.accountingemployeesproject;
 import edu.cbsystematics.com.accountingemployeesproject.model.Employee;
 import edu.cbsystematics.com.accountingemployeesproject.repository.EmployeeRepository;
 import edu.cbsystematics.com.accountingemployeesproject.service.EmployeeServiceImpl;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,12 +14,12 @@ import static org.mockito.BDDMockito.given;
 
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.willDoNothing;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -54,11 +55,13 @@ class EmployeeServiceTests {
         // given
         given(employeeRepository.save(any(Employee.class))).willReturn(employee);
 
+        //when(employeeRepository.save(Mockito.any(Employee.class))).thenReturn(employee);
+
         // when
         Employee savedEmployee = employeeService.saveEmployee(employee);
 
-        // then
-        assertThat(savedEmployee).isNotNull();
+        // Using AssertJ to check the correctness of the expected values.
+        Assertions.assertThat(savedEmployee).isNotNull();
         verify(employeeRepository, times(1)).save(any());
 
         // Output the result to console
@@ -102,7 +105,9 @@ class EmployeeServiceTests {
         List<Employee> employeeList = employeeService.getAllEmployees();
 
         // then
-        assertThat(employeeList).isNotNull()
+        // Using AssertJ to check the correctness of the expected values.
+        Assertions.assertThat(employeeList)
+                .isNotNull()
                 .hasSize(2)
                 .contains(employee, employee1);
 
