@@ -1,21 +1,17 @@
 package edu.cbsystematics.com.accountingemployeesproject.service;
 
 import edu.cbsystematics.com.accountingemployeesproject.model.Employee;
-import edu.cbsystematics.com.accountingemployeesproject.model.response.EmployeeResponse;
 import edu.cbsystematics.com.accountingemployeesproject.repository.EmployeeRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.Transient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.IntPredicate;
 
 
 @Service
@@ -30,14 +26,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-@Transient
+
     @Override
-    public void saveEmployee(Employee employee) {
+    public Employee saveEmployee(Employee employee) {
         Employee savedEmployee = employeeRepository.save(employee);
 
-        // Log the creation of the employee
+        // Log the successful save
         String fullName = savedEmployee.getFirstName() + " " + savedEmployee.getLastName();
         logger.info("Employee: {} was created with ID: {}", fullName, savedEmployee.getId());
+
+        return savedEmployee;
     }
 
     @Override
@@ -126,27 +124,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
-    }
-
-
-    @Override
-    public EmployeeResponse findAllEmployees(PageRequest pageable) {
-        // Specify the type parameter for the employeesPage variable
-        Page<Employee> employeesPage = employeeRepository.findAll(pageable);
-        return buildResponse(employeesPage);
-    }
-
-    private EmployeeResponse buildResponse(Page<Employee> employeesPage) {
-        // Use stream() to convert employeesPage to a List<Employee>
-        List<Employee> employees = employeesPage.stream().toList();
-        return EmployeeResponse.builder()
-                .pageNumber(employeesPage.getNumber() + 1)
-                .pageSize(employeesPage.getSize())
-                .totalElements(employeesPage.getTotalElements())
-                .totalPages(employeesPage.getTotalPages())
-                .employees(employees)
-                .isLastPage(employeesPage.isLast())
-                .build();
     }
 
 }

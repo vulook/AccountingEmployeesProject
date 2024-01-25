@@ -1,16 +1,16 @@
 package edu.cbsystematics.com.accountingemployeesproject.service;
 
 import edu.cbsystematics.com.accountingemployeesproject.model.Employee;
-import edu.cbsystematics.com.accountingemployeesproject.model.response.EmployeeResponse;
-import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.IntPredicate;
+
 
 public interface EmployeeService {
 
 	// Saves a new employee
-	void saveEmployee(Employee employee);
+	Employee saveEmployee(Employee employee);
 
 	// Updates an existing employee by ID
 	void updateEmployee(Long id, Employee updatedEmployee);
@@ -37,8 +37,5 @@ public interface EmployeeService {
 	List<Employee> findEmployeesYoungerThan(int age);
 
     List<Employee> getAllEmployees();
-
-    // Retrieves a paginated list of employees
-	EmployeeResponse findAllEmployees(PageRequest pageable);
 
 }
