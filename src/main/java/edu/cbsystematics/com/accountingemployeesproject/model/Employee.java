@@ -2,10 +2,7 @@ package edu.cbsystematics.com.accountingemployeesproject.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -27,8 +24,8 @@ public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, columnDefinition = "BIGINT(6)")
-    private long id;
+    @Column(name = "id", nullable = false, columnDefinition = "BIGINT")
+    private Long id;
 
     @Column(name = "first_name", nullable = false, columnDefinition = "varchar(100)")
     private String firstName;

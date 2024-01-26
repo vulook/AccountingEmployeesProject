@@ -14,7 +14,7 @@ public class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, columnDefinition = "BIGINT(6)")
+    @Column(name = "id", nullable = false, columnDefinition = "BIGINT")
     private Long id;
 
     @Column(name = "name_department", nullable = false, columnDefinition = "varchar(50)")

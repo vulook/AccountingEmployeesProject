@@ -18,7 +18,7 @@ public class Period {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, columnDefinition = "BIGINT(6)")
+    @Column(name = "id", nullable = false, columnDefinition = "BIGINT")
     private Long id;
 
     @Column(name = "start_date", nullable = false, columnDefinition = "DATE")
@@ -28,11 +28,11 @@ public class Period {
     private LocalDate endDate;
 
     @ManyToOne
-    @JoinColumn(name = "department_id", nullable = false, columnDefinition = "BIGINT(6)")
+    @JoinColumn(name = "department_id", nullable = false, columnDefinition = "BIGINT")
     private Department departmentId;
 
     @ManyToOne
-    @JoinColumn(name = "position_id", nullable = false, columnDefinition = "BIGINT(6)")
+    @JoinColumn(name = "position_id", nullable = false, columnDefinition = "BIGINT")
     private Position positionId;
 
     @JsonBackReference
