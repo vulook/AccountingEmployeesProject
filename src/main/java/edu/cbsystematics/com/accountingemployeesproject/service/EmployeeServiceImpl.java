@@ -39,7 +39,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void updateEmployee(Long id, Employee updatedEmployee) {
+    public Employee updateEmployee(Long id, Employee updatedEmployee) {
 
         // Create an Employee object using the Builder
         Employee employeeToUpdate = Employee.builder()
@@ -64,6 +64,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         String fullName = employeeToUpdate.getFirstName() + " " + employeeToUpdate.getLastName();
         logger.info("Profile updated for Employee: {} with ID: {}", fullName, id);
 
+        return employeeToUpdate;
     }
 
     @Override

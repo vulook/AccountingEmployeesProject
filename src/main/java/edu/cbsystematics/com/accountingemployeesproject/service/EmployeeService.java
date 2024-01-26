@@ -4,7 +4,6 @@ import edu.cbsystematics.com.accountingemployeesproject.model.Employee;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.IntPredicate;
 
 
 public interface EmployeeService {
@@ -13,7 +12,7 @@ public interface EmployeeService {
 	Employee saveEmployee(Employee employee);
 
 	// Updates an existing employee by ID
-	void updateEmployee(Long id, Employee updatedEmployee);
+	Employee updateEmployee(Long id, Employee updatedEmployee);
 
 	// Retrieves an employee by their ID
 	Optional<Employee> findEmployeeById(Long id);
