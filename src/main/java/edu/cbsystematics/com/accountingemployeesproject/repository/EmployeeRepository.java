@@ -49,6 +49,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, Pagin
     List<Employee> findByBirthDateBefore(LocalDate birthDateLimit);
 
     // Retrieves employees with birthdays less than a specified date
-    List<Employee> findByBirthDateLessThan(LocalDate birthDateLimit);
+    List<Employee> findByBirthDateAfter(LocalDate birthDateLimit);
 
 }

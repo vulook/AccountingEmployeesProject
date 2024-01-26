@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.IntPredicate;
 
 
 @Service
@@ -119,8 +118,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Employee> findEmployeesYoungerThan(int age) {
         // Determination of date of birth based on age
         LocalDate birthDateLimit = LocalDate.now().minusYears(age);
-        return employeeRepository.findByBirthDateLessThan(birthDateLimit);
+        return employeeRepository.findByBirthDateAfter(birthDateLimit);
     }
+
 
     @Override
     public List<Employee> getAllEmployees() {
