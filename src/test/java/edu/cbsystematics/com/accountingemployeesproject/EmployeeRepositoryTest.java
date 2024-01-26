@@ -52,10 +52,10 @@ class EmployeeRepositoryTest {
     private Employee createTestEmployee() {
         // Using the builder pattern
         return Employee.builder()
-                .firstName("TestJpaTest")
-                .lastName("TestJpaTest")
+                .firstName("TestJpa")
+                .lastName("TestJpa")
                 .birthDate(LocalDate.of(1991, 8, 10))
-                .email("test_jpa@gmail.com")
+                .email("test_jpa@example.com")
                 .phoneNumber("+38097321112")
                 .build();
     }
@@ -124,7 +124,7 @@ class EmployeeRepositoryTest {
 
         // when - when - action or the behavior that we are going to test
         savedEmployee.setFirstName("UpdateTest");
-        savedEmployee.setEmail("update_test@gmail.com");
+        savedEmployee.setEmail("update_test@example.com");
 
         employeeRepository.updateEmployee(
                 savedEmployee.getId(),
@@ -141,7 +141,7 @@ class EmployeeRepositoryTest {
         // then - verify the output
         assertThat(updatedEmployee).isNotNull();
         assertThat(updatedEmployee.getFirstName()).isEqualTo("UpdateTest");
-        assertThat(updatedEmployee.getEmail()).isEqualTo("update_test@gmail.com");
+        assertThat(updatedEmployee.getEmail()).isEqualTo("update_test@example.com");
         System.out.println("JpaTest givenEmployeeObject_whenUpdateEmployee(): Passed");
     }
 
