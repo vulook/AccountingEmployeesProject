@@ -2,9 +2,8 @@ package edu.cbsystematics.com.accountingemployeesproject;
 
 import edu.cbsystematics.com.accountingemployeesproject.model.Employee;
 import edu.cbsystematics.com.accountingemployeesproject.service.EmployeeService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
@@ -15,11 +14,15 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest
-@TestPropertySource(locations = "classpath:application-test.properties")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@TestPropertySource(locations = "classpath:application-test.properties") // Using H2
 class EmployeeServiceAnotherTests {
 
     @Autowired
@@ -30,7 +33,7 @@ class EmployeeServiceAnotherTests {
 
     @BeforeEach
     public void setup() {
-        // Initializing of the test employee
+        // Initialization of the test employee
         employeeTest = Employee.builder()
                 .firstName("TestService")
                 .lastName("TestService")
@@ -41,6 +44,7 @@ class EmployeeServiceAnotherTests {
     }
 
     @Test
+    @Order(1)
     @DisplayName("It should save an employee to the database and find it by ID")
     void itShouldSaveAndFindEmployee() {
         // When
@@ -67,6 +71,7 @@ class EmployeeServiceAnotherTests {
     }
 
     @Test
+    @Order(2)
     @DisplayName("It should find employees older than a given age")
     void itShouldFindEmployeesOlderThan() {
         // Given
@@ -89,6 +94,7 @@ class EmployeeServiceAnotherTests {
     }
 
     @Test
+    @Order(3)
     @DisplayName("It should find employees younger than a given age")
     void itShouldFindEmployeesYoungerThan() {
         // Given
@@ -111,6 +117,7 @@ class EmployeeServiceAnotherTests {
     }
 
     @Test
+    @Order(4)
     @DisplayName("It should find employees within the given age range")
     void itShouldFindEmployeesByAgeRange() {
         // Given
@@ -125,6 +132,7 @@ class EmployeeServiceAnotherTests {
         assertFalse(employeesInRange.isEmpty(), "List of employees should not be empty");
 
         // Verify the employeesInRange
+        System.out.println("List of birth dates and ages of employees from " + ageFrom + " to " +  ageTo + ":");
         assertThat(employeesInRange)
                 .allSatisfy(employee -> {
                     LocalDate currentDate = LocalDate.now();
@@ -135,6 +143,22 @@ class EmployeeServiceAnotherTests {
                             .isLessThanOrEqualTo(ageTo);
                     System.out.println("Birth Date: " + employee.getBirthDate() + ", Age: " + age);
                 });
+
+
+        //*********************************************************************************************************/
+        // Illustrates various methods to verify the presence of the test employee in the employeesInRange
+        Assertions.assertThat(employeesInRange).extracting(Employee::getFirstName).contains("TestService");
+
+        Assertions.assertThat(employeesInRange)
+                .extracting(Employee::getFirstName, Employee::getLastName, Employee::getBirthDate)
+                .contains(tuple("TestService", "TestService", LocalDate.of(1995, 5, 5)));
+
+        assertThat(employeesInRange, hasItem(allOf(
+                hasProperty("firstName", is("TestService")),
+                hasProperty("lastName", is("TestService")),
+                hasProperty("birthDate", is(LocalDate.of(1995, 5, 5)))
+        )));
+
     }
 
 }
