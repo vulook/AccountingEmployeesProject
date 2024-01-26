@@ -1,7 +1,9 @@
 package edu.cbsystematics.com.accountingemployeesproject;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +12,9 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.stream.Stream;
+
+
 @SpringBootTest
 @AutoConfigureMockMvc
 class HttpRequestTests {
@@ -17,59 +22,35 @@ class HttpRequestTests {
     @Autowired
     private MockMvc mockMvc;
 
-    @Test
-    @DisplayName("Test GET /departments endpoint returns OK status")
-    void testDepartmentsEndpoint() throws Exception {
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/departments"))
+    @ParameterizedTest(name = "=> JUnit: Test GET {0} endpoint returns OK status")
+    @DisplayName("=> JUnit: Test GET endpoints return OK status")
+    @MethodSource("endpointsProvider")
+    void testEndpoints(String endpoint) throws Exception {
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(endpoint))
+                // Verify that the response status is OK (200)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
         printTestResult(result);
     }
 
-    @Test
-    @DisplayName("Test GET /positions endpoint returns OK status")
-    void testPositionsEndpoint() throws Exception {
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/positions"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-
-        printTestResult(result);
+    // Provide a stream of arguments for parameterized testing
+    private static Stream<Arguments> endpointsProvider() {
+        return Stream.of(
+                Arguments.of("/departments"),
+                Arguments.of("/positions"),
+                Arguments.of("/periods"),
+                Arguments.of("/employees"),
+                Arguments.of("/pageable")
+        );
     }
 
-    @Test
-    @DisplayName("Test GET /periods endpoint returns OK status")
-    void testPeriodsEndpoint() throws Exception {
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/periods"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-
-        printTestResult(result);
-    }
-
-    @Test
-    @DisplayName("Test GET /employees endpoint returns OK status")
-    void testEmployeesEndpoint() throws Exception {
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/employees"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-
-        printTestResult(result);
-    }
-
-    @Test
-    @DisplayName("Test GET /pageable endpoint returns OK status")
-    void testPageableEndpoint() throws Exception {
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/pageable"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-
-        printTestResult(result);
-    }
-
+    // Print details
     private void printTestResult(MvcResult result) {
         System.out.println("Method: " + result.getRequest().getMethod());
         System.out.println("URI: " + result.getRequest().getRequestURI());
         System.out.println("Status: " + result.getResponse().getStatus());
     }
+
+
 }
