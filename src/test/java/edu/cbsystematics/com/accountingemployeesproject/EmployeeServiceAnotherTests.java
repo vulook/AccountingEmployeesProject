@@ -38,14 +38,14 @@ class EmployeeServiceAnotherTests {
                 .firstName("TestService")
                 .lastName("TestService")
                 .birthDate(LocalDate.of(1995, 5, 5))
-                .email("test_service@gmail.com")
-                .phoneNumber("+38097321112")
+                .email("test_service@example.com")
+                .phoneNumber("+380975555555")
                 .build();
     }
 
     @Test
     @Order(1)
-    @DisplayName("It should save an employee to the database and find it by ID")
+    @DisplayName("=> JUnit: should save an employee to the database and find it by ID")
     void itShouldSaveAndFindEmployee() {
         // When
         Employee savedEmployee = employeeService.saveEmployee(employeeTest);
@@ -72,7 +72,7 @@ class EmployeeServiceAnotherTests {
 
     @Test
     @Order(2)
-    @DisplayName("It should find employees older than a given age")
+    @DisplayName("=> JUnit: should find employees older than a given age")
     void itShouldFindEmployeesOlderThan() {
         // Given
         int age = 30; // Specify the age for testing
@@ -95,7 +95,7 @@ class EmployeeServiceAnotherTests {
 
     @Test
     @Order(3)
-    @DisplayName("It should find employees younger than a given age")
+    @DisplayName("=> JUnit: should find employees younger than a given age")
     void itShouldFindEmployeesYoungerThan() {
         // Given
         int age = 30; // Specify the age for testing
@@ -118,7 +118,7 @@ class EmployeeServiceAnotherTests {
 
     @Test
     @Order(4)
-    @DisplayName("It should find employees within the given age range")
+    @DisplayName("=> JUnit: should find employees within the given age range")
     void itShouldFindEmployeesByAgeRange() {
         // Given
         int ageFrom = 25;

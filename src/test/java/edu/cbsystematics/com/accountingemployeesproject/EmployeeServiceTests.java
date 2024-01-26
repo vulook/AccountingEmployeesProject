@@ -14,7 +14,6 @@ import static org.mockito.BDDMockito.given;
 
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -43,9 +42,9 @@ class EmployeeServiceTests {
                 .id(1L)
                 .firstName("TestService")
                 .lastName("TestService")
-                .birthDate(LocalDate.of(1991, 8, 10))
-                .email("test_service@gmail.com")
-                .phoneNumber("+38097321112")
+                .birthDate(LocalDate.of(1991, 1, 1))
+                .email("test_service@example.com")
+                .phoneNumber("+380971111111")
                 .build();
     }
 
@@ -91,15 +90,7 @@ class EmployeeServiceTests {
     @DisplayName("=> JUnit test for getAllEmployees method with MockitoExtension")
     void givenEmployeesList_whenGetAllEmployees() {
         // given
-        Employee employee1 = Employee.builder()
-                .firstName("TestService2")
-                .lastName("TestService2")
-                .birthDate(LocalDate.of(1992, 12, 12))
-                .email("test_service2@gmail.com")
-                .phoneNumber("+38097321114")
-                .build();
-
-        given(employeeRepository.findAll()).willReturn(List.of(employee, employee1));
+        given(employeeRepository.findAll()).willReturn(List.of(employee, employee));
 
         // when
         List<Employee> employeeList = employeeService.getAllEmployees();
@@ -109,7 +100,7 @@ class EmployeeServiceTests {
         Assertions.assertThat(employeeList)
                 .isNotNull()
                 .hasSize(2)
-                .contains(employee, employee1);
+                .contains(employee, employee);
 
         // Output the result to console
         System.out.println("Test givenEmployeesList_whenGetAllEmployees() with MockitoExtension : Passed");
@@ -120,16 +111,17 @@ class EmployeeServiceTests {
     @DisplayName("=> JUnit test for updateEmployee method with MockitoExtension")
     void givenEmployeeObject_whenUpdateEmployee() {
         // given
+        long employeeId = 1L;
         Employee updatedEmployeeRequest = Employee.builder()
                 .firstName("TestService2")
                 .lastName("TestService2")
                 .birthDate(LocalDate.of(1992, 12, 12))
-                .email("test_service2@gmail.com")
-                .phoneNumber("+38097321114")
+                .email("test_service2@example.com")
+                .phoneNumber("+380971211212")
                 .build();
 
         // when
-        employeeService.updateEmployee(1L, updatedEmployeeRequest);
+        employeeService.updateEmployee(employeeId, updatedEmployeeRequest);
 
         // then
         verify(employeeRepository).updateEmployee(
@@ -137,8 +129,8 @@ class EmployeeServiceTests {
                 "TestService2",
                 "TestService2",
                 LocalDate.of(1992, 12, 12),
-                "test_service2@gmail.com",
-                "+38097321114"
+                "test_service2@example.com",
+                "+380971211212"
         );
 
         // Output the result to console
