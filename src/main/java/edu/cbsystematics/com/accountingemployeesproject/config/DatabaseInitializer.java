@@ -181,8 +181,8 @@ public class DatabaseInitializer {
         periodService.savePeriod(new Period(LocalDate.of(2021, 3, 10), null, humanResources, leadHuman, employee06));
 
         periodService.savePeriod(new Period(LocalDate.of(2010, 12, 1), LocalDate.of(2013, 10, 22), humanResources, juniorHuman, employee07));
-        periodService.savePeriod(new Period(LocalDate.of(2013, 10, 23), LocalDate.of(2020, 3, 15), humanResources, seniorHuman, employee07));
-        periodService.savePeriod(new Period(LocalDate.of(2020, 3, 10), null, humanResources, leadHuman, employee07));
+        periodService.savePeriod(new Period(LocalDate.of(2013, 10, 25), LocalDate.of(2020, 3, 1), humanResources, seniorHuman, employee07));
+        periodService.savePeriod(new Period(LocalDate.of(2020, 3, 28), null, humanResources, leadHuman, employee07));
 
         periodService.savePeriod(new Period(LocalDate.of(2005, 1, 30), LocalDate.of(2010, 10, 22), humanResources, juniorHuman, employee08));
         periodService.savePeriod(new Period(LocalDate.of(2010, 10, 23), LocalDate.of(2023, 6, 15), humanResources, seniorHuman, employee08));
