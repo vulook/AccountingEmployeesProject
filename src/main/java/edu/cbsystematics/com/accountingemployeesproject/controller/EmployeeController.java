@@ -25,24 +25,29 @@ public class EmployeeController {
 
 
     @PostMapping("/add")
-    // Endpoint for adding a new employee
-    public ResponseEntity<Void> saveEmployee(@Valid @RequestBody Employee employee) {
-        employeeService.saveEmployee(employee);
-        return ResponseEntity.status(HttpStatus.CREATED).build(); // Return 201 "Created"
+    public ResponseEntity<Employee> saveEmployee(@Valid @RequestBody Employee employee) {
+        Employee savedEmployee = employeeService.saveEmployee(employee);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedEmployee);
     }
 
     @PutMapping("/update/{id}")
-    // Endpoint for updating an existing employee by ID
-    public ResponseEntity<Void> updateEmployee(@PathVariable Long id, @RequestBody @Valid Employee updatedEmployee) {
+    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody @Valid Employee updatedEmployee) {
         return employeeService.findEmployeeById(id)
                 .map(existingEmployee -> {
+                    System.out.println("Found existing employee with ID: " + id);
                     // Set the ID of the updated employee
                     updatedEmployee.setId(id);
                     // Call the service method to update the employee
-                    employeeService.updateEmployee(id, updatedEmployee);
-                    return ResponseEntity.ok().<Void>build(); // Return 200 "OK"
+                    Employee updated = employeeService.updateEmployee(id, updatedEmployee);
+                    System.out.println("Updated employee with ID: " + id);
+
+                    return ResponseEntity.ok(updated); // Return 200 "OK" with the updated employee
                 })
-                .orElseGet(() -> ResponseEntity.notFound().build()); // Return 404 "Not Found"
+                .orElseGet(() -> {
+                    System.out.println("Employee with ID " + id + " not found.");
+                    return ResponseEntity.notFound().build(); // Return 404 "Not Found"
+                });
     }
 
     @DeleteMapping("/delete/{id}")
