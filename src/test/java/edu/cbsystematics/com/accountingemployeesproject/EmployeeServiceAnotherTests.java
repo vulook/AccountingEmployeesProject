@@ -145,8 +145,8 @@ class EmployeeServiceAnotherTests {
                 });
 
 
-        //*********************************************************************************************************/
-        // Illustrates various methods to verify the presence of the test employee in the employeesInRange
+        //***/
+        // Shows different ways to find test employee in range
         Assertions.assertThat(employeesInRange).extracting(Employee::getFirstName).contains("TestService");
 
         Assertions.assertThat(employeesInRange)
