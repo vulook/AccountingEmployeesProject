@@ -32,6 +32,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
+
 @WebMvcTest(controllers = PagingController.class)
 @ExtendWith(MockitoExtension.class)
 class PagingControllerTests {
@@ -115,6 +116,7 @@ class PagingControllerTests {
                 pageRequest,
                 expectedEmployees.size());
 
+        // Mocking the service behavior
         when(pagingService.findAllEmployees(any(PageRequest.class)))
                 .thenAnswer(invocation -> {
                     // Return the response
@@ -127,6 +129,13 @@ class PagingControllerTests {
                             .isLastPage(employeesPage.isLast())
                             .sortField(employeesPage.getSort().iterator().next().getProperty())
                             .sortDirection(employeesPage.getSort().iterator().next().isAscending() ? "ASC" : "DESC")
+                            .sortDirection(
+                                    employeesPage.getSort().stream()
+                                            .filter(order -> sortField.equals(order.getProperty()))
+                                            .findFirst()
+                                            .map(order -> order.getDirection().name())
+                                            .orElse(Sort.DEFAULT_DIRECTION.name())
+                            )
                             .build();
                 });
 
