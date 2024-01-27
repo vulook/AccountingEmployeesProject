@@ -128,7 +128,7 @@ class PagingControllerTests {
                             .totalPages(employeesPage.getTotalPages())
                             .isLastPage(employeesPage.isLast())
                             .sortField(employeesPage.getSort().iterator().next().getProperty())
-                            .sortDirection(employeesPage.getSort().iterator().next().isAscending() ? "ASC" : "DESC")
+                            //.sortDirection(employeesPage.getSort().iterator().next().isAscending() ? "ASC" : "DESC")
                             .sortDirection(
                                     employeesPage.getSort().stream()
                                             .filter(order -> sortField.equals(order.getProperty()))
