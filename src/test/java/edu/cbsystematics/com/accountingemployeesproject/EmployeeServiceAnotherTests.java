@@ -138,7 +138,7 @@ class EmployeeServiceAnotherTests {
                     LocalDate currentDate = LocalDate.now();
                     int age = Period.between(employee.getBirthDate(), currentDate).getYears();
                     assertThat(age)
-                            .as("Employee age should be within the specified range")
+                            .as("The employee's age is within the specified range")
                             .isGreaterThanOrEqualTo(ageFrom)
                             .isLessThanOrEqualTo(ageTo);
                     System.out.println("Birth Date: " + employee.getBirthDate() + ", Age: " + age);
