@@ -47,21 +47,21 @@ public class PagingController {
             EmployeeResponse response = pagingService.findAllEmployees(pageRequest);
 
             // Log successful request at DEBUG level
-            logger.debug("Fetched employees successfully. PageNumber: {}, PageSize: {}, SortDirection: {}, SortField: {}",
-                    pageNumber, pageSize, sortDirection, sortField);
+            logger.debug("Fetched employees successfully. PageNumber: {}, PageSize: {}, SortField: {}, SortDirection: {}",
+                    pageNumber, pageSize, sortField, sortDirection);
 
             return ResponseEntity.ok(response);
 
         } catch (IllegalArgumentException e) {
             // Log bad request and return a bad request response if input parameters are invalid
-            logger.warn("Bad request for fetching employees. PageNumber: {}, PageSize: {}, SortDirection: {}, SortField: {}",
-                    pageNumber, pageSize, sortDirection, sortField);
+            logger.warn("Bad request for fetching employees. PageNumber: {}, PageSize: {}, SortField: {}, SortDirection: {}",
+                    pageNumber, pageSize, sortField, sortDirection);
             return ResponseEntity.badRequest().build();
 
         } catch (Exception ex) {
             // Log internal server error and return an internal server error response
-            logger.error("Internal server error while fetching employees. PageNumber: {}, PageSize: {}, SortDirection: {}, SortField: {}",
-                    pageNumber, pageSize, sortDirection, sortField, ex);
+            logger.error("Internal server error while fetching employees. PageNumber: {}, PageSize: {}, SortField: {}, SortDirection: {}",
+                    pageNumber, pageSize, sortField, sortDirection, ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
