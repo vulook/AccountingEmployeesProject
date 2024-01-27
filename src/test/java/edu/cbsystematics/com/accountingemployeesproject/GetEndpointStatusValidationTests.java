@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class HttpRequestTests {
+class GetEndpointStatusValidationTests {
 
     @Autowired
     private MockMvc mockMvc;
