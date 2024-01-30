@@ -113,10 +113,10 @@ ___
 - Пакет tests включає **27 тестів** для перевірки різних частин проєкту. 
 - Клас **EmployeeRepositoryTest** містить тести для перевірки репозиторію Employee. 
 - Анотація **@DataJpaTest** вказує на тестування тільки JPA компонентів, а **@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)** використовує реальну базу даних. 
-- Тести CRUD, такі як *givenEmployeeObject_whenSave чи givenEmployeeId_whenFindByIdSavedEmployee*, перевіряють операції збереження, пошуку, оновлення та видалення працівників.
+- Тести CRUD, такі як *givenEmployeeObject_whenSave, givenEmployeeId_whenFindByIdSavedEmployee, givenEmployeesList_whenFindAll, givenEmployeeObject_whenUpdateEmployee, givenEmployeeObject_whenDelete*, перевіряють операції збереження, пошуку, оновлення та видалення працівників.
 - Клас **EmployeeServiceTests** має тести для методів сервісу EmployeeServiceImpl за допомогою Mockito. 
 - Анотація **@ExtendWith(MockitoExtension.class)** вказує на використання *MockitoExtension* для виконання тестів. 
-- Тести CRUD, такі як *givenEmployeeObject_whenCreateEmployee_thenReturnSavedEmployee*, перевіряють різні операції з працівниками.
+- Тести CRUD, такі як *givenEmployeeObject_whenSaveEmployee, givenEmployeeId_whenFindByIdSavedEmployee, givenEmployeesList_whenGetAllEmployees, givenEmployeeObject_whenUpdateEmployee, givenEmployeeId_whenDeleteEmployee*, перевіряють різні операції з працівниками.
 - Клас **EmployeeServiceAnotherTests** містить тести для перевірки спеціальних методів сервісу EmployeeServiceImpl.
 - Анотації **@SpringBootTest, @TestMethodOrder(MethodOrderer.OrderAnnotation.class), @TestPropertySource** забезпечують налаштування для тестування на базі H2 та визначають порядок виконання тестів.
 - Файл **application-test.properties** містить конфігураційні параметри для тестової бази даних H2, що використовуються під час виконання тестів.
