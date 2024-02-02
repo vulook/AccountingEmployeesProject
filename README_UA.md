@@ -94,6 +94,9 @@ ___
 - Клас **DatabaseInitializer** використовується для ініціалізації бази даних при запуску додатка. У методі init відбувається створення та збереження певної кількості працівників в базі.
 - Конфігураційний клас **JacksonDateFormatterConfiguration** налаштовує серіалізацію та десеріалізацію дат для бібліотеки Jackson.
 - Конфігураційний клас **MvcConfig** визначає адреси переглядів для основних ендпоінтів.
+- Конфігураційний клас **LoggingAspectAllMethods** містить аспект Spring, який забезпечує логування для всіх публічних методів у проєкті.
+- Анотація **@Aspect** позначає клас як аспект, **@Component** додає клас до компонентів Spring.
+- Анотація @Around("publicMethods()"): логує вхід та вихід з методів, вимірює час їх виконання.
 
 #### 6. templates
 - Пакет **templates** розташований у директорії **resources** та містить код для відображення вебсторінок. 
@@ -116,13 +119,13 @@ ___
 - Тести CRUD, такі як *givenEmployeeObject_whenSave, givenEmployeeId_whenFindByIdSavedEmployee, givenEmployeesList_whenFindAll, givenEmployeeObject_whenUpdateEmployee, givenEmployeeObject_whenDelete*, перевіряють операції збереження, пошуку, оновлення та видалення працівників.
 - Клас **EmployeeServiceTests** має тести для методів сервісу EmployeeServiceImpl за допомогою Mockito. 
 - Анотація **@ExtendWith(MockitoExtension.class)** вказує на використання *MockitoExtension* для виконання тестів. 
-- Анотації @Mock створює макети об'єктів, а @InjectMocks використовує їх для ініціалізації тестового екземпляру класу.
+- Анотації **@Mock** створює макети об'єктів, а **@InjectMocks** використовує їх для ініціалізації тестового екземпляру класу.
 - Тести CRUD, такі як *givenEmployeeObject_whenSaveEmployee, givenEmployeeId_whenFindByIdSavedEmployee, givenEmployeesList_whenGetAllEmployees, givenEmployeeObject_whenUpdateEmployee, givenEmployeeId_whenDeleteEmployee*, перевіряють різні операції з працівниками.
 - Клас **EmployeeServiceAnotherTests** містить тести для перевірки спеціальних методів сервісу EmployeeServiceImpl.
 - Анотації **@SpringBootTest, @TestMethodOrder(MethodOrderer.OrderAnnotation.class), @TestPropertySource** забезпечують налаштування для тестування на базі H2 та визначають порядок виконання тестів.
 - Файл **application-test.properties** містить конфігураційні параметри для тестової бази даних H2, що використовуються під час виконання тестів.
 - Клас **EmployeeControllerTests** використовує анотації **@WebMvcTest** та **@ExtendWith(MockitoExtension.class)** для ефективного тестування веб-контролера EmployeeController. Тести включають перевірки створення, отримання, оновлення та видалення працівника через HTTP запити.
-- Анотація @MockBean дозволяє підставити фальшивку (Mock) для служби, тим самим імітуючи її поведінку під час тестування.
+- Анотація **@MockBean** дозволяє підставити фальшивку (*Mock*) для служби, тим самим імітуючи її поведінку під час тестування.
 - Клас **PagingControllerTests** тестує контролер PagingController для взаємодії з пагінацією та сортуванням. 
 - Тест *fetchPagedEmployees_givenSortFieldAndSortDirection_returnsPagedResult* перевіряє, чи контролер коректно обробляє HTTP GET-запит із параметрами пагінації та сортування, повертаючи очікувані результати.
 - Клас **GetEndpointStatusValidationTests** містить тести для перевірки, чи основні GET ендпоінти повертають статус OK. Використовується параметризований тест для перевірки різних ендпоінтів.
