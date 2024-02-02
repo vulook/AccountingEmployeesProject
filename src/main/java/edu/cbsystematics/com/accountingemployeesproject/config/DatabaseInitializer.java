@@ -34,7 +34,6 @@ public class DatabaseInitializer {
         this.periodService = periodService;
     }
 
-
     @PostConstruct
     public void init() {
 
